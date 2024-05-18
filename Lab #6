@@ -1,0 +1,109 @@
+use G00192201;
+
+--1 run the follow query. How many records are in the table? 
+
+Select *
+from Cust_Orders;
+
+--2 run this query below. It will enter 3 new records into your table
+
+insert into Cust_Orders
+values (1500, 908132, 665, 'Cash', '2018-03-08 00:00:00', 'Electronics'),
+       (1501, 876661, 128, 'Credit Card', '2016-05-18 00:00:00', 'Toys'),
+	   (1502, 732027, 785, 'Check', '2018-03-08 00:00:00', 'Furniture')
+
+--3 run the follow query. How many records are in the table this time?
+
+Select *
+from Cust_Orders;
+
+--Answer: 114
+
+--4 Run the following queries. What happened to Order_ID 1502
+begin transaction;
+
+delete from Cust_Orders
+where Order_ID = '1502';
+
+select *
+from Cust_Orders;
+
+--Answer: 1502 is gone, and 1501 is the last one in the record
+
+--5 Run the following queries. Now what happened to Order_ID 1502
+Rollback;
+
+Select *
+from Cust_Orders;
+
+--Answer: 1502 is back
+
+--6 Run question 4 again, this time add a commit statement. 
+--What happens to Order_ID 1502 now
+
+begin transaction;
+
+delete from Cust_Orders
+where Order_ID = '1502';
+
+select *
+from Cust_Orders;
+
+commit;
+
+--Answer: 1502 is gone
+
+--7 Try using Rollback. Can you undo the delete statement?
+
+rollback;
+
+--Answer: No, we can't undo the delete statement. Once we commit, we can't rollback an action.
+
+--8 Using question 2 as a guide, insert a new record, order_id =1600
+--  Run a Select * query to see if the record is in your table
+
+insert into Cust_Orders
+values (1600, 908132, 665, 'Cash', '2018-03-08 00:00:00', 'Electronics');
+select * from Cust_Orders;
+rollback;
+
+--9 Adding a Begin Transaction statement, insert another row
+--  This time Order_ID 1601. Run Select * to confirm
+
+begin transaction;
+insert into Cust_Orders
+values (1601, 908132, 665, 'Cash', '2018-03-08 00:00:00', 'Electronics');
+select * from Cust_Orders;
+rollback;
+
+--10 Try either a commit or rollback command - What happened?
+
+rollback;
+select * from Cust_Orders;
+
+--Answer: 1601 is gone
+
+--11 -- Turn the query below into a View
+
+create view first_view as (
+Select s.Stud_NM as [Student Name], s.Start_dt as [Start Date], T.Subject,
+t1.name as [Tutor Name]
+from Student as s
+join Tutoring as t
+on s.Stud_ID = t.Student_ID
+join tutor as t1
+on t.Tutor_ID = t1.Tutor_ID);
+
+--12 -- Run a query from the view you just created where
+-------Subject does not start with the letter G
+
+select * from first_view
+where subject not like 'g%'
+
+--Bonus Question----
+--13 -- Run a query from the view you just created where
+-------tutor name does not end with the letter b
+
+select *
+from first_view
+where [Tutor Name] not like '%b'
