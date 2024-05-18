@@ -1,0 +1,89 @@
+use G00192201;
+
+
+--1 -- provide appropriate data types for the fields below
+create table Stud_Info(
+Stud_ID int primary key,   -- should be primary key
+Stud_NM nvarchar(100),  -- think string
+Birthday date);  
+
+
+--2  alter table below so Stud_Id is an identity column
+
+create table Stud_Info_V1 (
+Stud_Id int identity (1,1) primary key,
+Stud_NM nvarchar(50),
+Birthday date);
+
+
+--3  add a column named GPA
+    -- made column a decimal(3,2)
+alter table Stud_Info
+add GPA decimal(3,2) ;
+
+
+ --4  Alter GPA column -- change data type to nvarchar(4)
+ alter table Stud_Info
+alter column GPA nvarchar(4);
+
+
+--5  Run the following insert statement, view the results with the select statement
+insert into Stud_Info
+values ('123','Fred','2002-01-06','3.41'),
+       ('345','Velma', '2001-03-24','2.86');
+
+select * from Stud_info;
+
+
+--6 Run the following insert statement, view the results with the select statement
+-- What differences did you notice between this and step 5?
+insert into Stud_Info (Stud_ID,Stud_NM, GPA)
+values ('901','Scooby','4.0');
+
+Select * from Stud_info;
+
+--Response: Step 6 enables for there to be no data in the birthday column for the new set of data.
+
+--7  Fix the following insert statment so it works
+-- HINT***** Stud_id is an Identity column in this table
+insert into Stud_Info_V1 (Stud_NM, Birthday)
+values ('Scooby', '2000-03-01'),
+       ('Shaggy', '2001-02-08');
+
+select * from Stud_Info_V1;
+
+-- 8 create the table below
+create table Grades (
+Grade_ID int identity(1,1) primary key,
+Class_NM nvarchar(255),
+Grade nvarchar(3),
+Student_ID int
+);
+
+-- 9 using the slide deck for reference, Alter table Grades so the Student_id is a 
+-- foreign key referencing the table Stud_info_v1
+
+alter table grades
+add foreign key(Student_ID) references Stud_info_V1(Stud_ID);
+
+/* For Questions 10, 11, & 12
+ Use table Stud_Info 
+ */
+
+--- Using Stud_Info table for questions below
+-- 10  Choosing between Delete, Truncate and Drop, run the command that removes
+-- any records with NULL value for birthday  where clause
+delete from stud_info
+where birthday is NULL;
+
+select * from stud_info;
+
+-- 11  Choosing between Delete, Truncate and Drop, run the command that removes
+-- all records, but maintains the table
+truncate table stud_info;
+
+-- 12  Choosing between Delete, Truncate and Drop, run the command that complete
+-- removes the table from your database
+drop table stud_info;
+
+drop table stud_info_v1
