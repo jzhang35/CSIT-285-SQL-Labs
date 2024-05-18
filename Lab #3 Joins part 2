@@ -1,0 +1,80 @@
+use G00192201;
+
+--1 Change Query below to a Full Outer Join
+Select *
+from Student as s
+full join Tutoring as t
+on s.Stud_ID = t.Student_ID;
+
+--2 Debug the query below
+Select *
+from Tutor as t
+join tutoring as t1
+on t.Tutor_ID = t1.tutor_ID;
+
+--3 Fix the query below so that it only returns the following Fields: Stud_NM,
+--Tutor_ID, Subject
+Select Stud_NM,
+Tutor_ID,
+Subject
+from Student as s
+join Tutoring as t
+on s.Stud_ID = t.Student_ID;
+
+--4 Fix query below (hint: Tutor_ID is a field in both tables)
+Select t.Tutor_ID, Name, YearService, Subject
+from Tutor as t
+join tutoring as t1
+on t.Tutor_ID = t1.tutor_ID;
+
+--5 Alias the Field names below so they display Tutor Name, Years of Service,
+--Subject Taught
+-- (HINT remember to use [] when a Field name has a space in it.
+Select Name [Tutor Name], 
+YearService as [Years of Service], 
+Subject as [Subject Taught]
+from Tutor as t
+join tutoring as t1
+on t.Tutor_ID = t1.tutor_ID;
+
+--6 Fix the query below so no NULLs show
+Select t.Name, t.YearService, t1.Subject
+from Tutor as t
+left join tutoring as t1
+on t.Tutor_ID = t1.tutor_ID
+where subject is not NULL;
+
+--7 Filter results to only show tutors whose names begin with the letter B
+Select t.Name, t.YearService, t1.Subject
+from Tutor as t
+left join tutoring as t1
+on t.Tutor_ID = t1.tutor_ID
+where t.name like 'b%';
+
+--8 Only return students whose start dates are before the year 2022
+Select s.Stud_NM as [Student Name], s.Start_dt as [Start Date], T.Subject
+from Student as s
+join Tutoring as t
+on s.Stud_ID = t.Student_ID
+where s.Start_dt < '2022-01-01';
+
+--9 Reorder columns so Tutor Name comes first
+Select t1.name as [Tutor Name],
+s.Stud_NM as [Student Name], 
+s.Start_dt as [Start Date], 
+T.Subject
+from Student as s
+join Tutoring as t
+on s.Stud_ID = t.Student_ID
+join tutor as t1
+on t.Tutor_ID = t1.Tutor_ID
+
+--10 Only return records where Tutor Name is Carol
+Select s.Stud_NM as [Student Name], s.Start_dt as [Start Date], T.Subject,
+t1.name as [Tutor Name]
+from Student as s
+join Tutoring as t
+on s.Stud_ID = t.Student_ID
+join tutor as t1
+on t.Tutor_ID = t1.Tutor_ID
+where t1.name = 'Carol'
