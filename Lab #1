@@ -1,0 +1,55 @@
+Lab 1: SQL Lab Cust_Order
+Using the Cust_Order table in your database, submit the queries needed to answer the following
+questions:
+1. Return all column and records from the table Cust_Order
+
+select *
+from Cust_orders;
+
+2. Return only Order_ID, Cust_ID and Payment Columns
+
+select  Order_ID, Cust_ID, Payment Columns
+from Cust_orders;
+
+3. Alias Cust_ID to say Customer ID (hint remember [] when spaces are used)
+
+select  Order_ID, Cust_ID as [Customer ID], Payment Columns
+from Cust_orders;
+
+4. Using Where, return all records where Payment is Cash
+
+select  Order_ID, Cust_ID, Payment
+from Cust_orders
+where Payment = 'Cash';
+
+5. Select all columns again, and return records where Tran_Dt is after Jan 1 2017
+
+select *
+from Cust_orders
+where Tran_Dt > '2017-01-01';
+
+6. Return records where Tran_Dt is between Jan 1 2015 and Jan 1 2020
+
+select *
+from Cust_orders
+where Tran_Dt between '2015-01-01' and '2020-01-01';
+
+7. Using Query 6, order the results by Tran_Dt from oldest to newest
+
+select *
+from Cust_orders
+order by Tran_Dt asc;
+
+8. Same thing as 7, now newest to oldest
+
+select *
+from Cust_orders
+order by Tran_Dt desc;
+
+9. Return all records where Payment type is Cash
+
+10. Return all records where Department ends with the letter S
+
+select *
+from Cust_orders
+where Dept like '%S';
