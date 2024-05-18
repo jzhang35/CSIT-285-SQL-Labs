@@ -1,0 +1,125 @@
+use G00192201;
+
+--Lab 8
+
+
+--1 Using Sports_Stats - write a query that returns all values
+select *
+from Sports_Stats
+
+
+
+--2 Using Sport_Stats - write a query that only returns player_nm, team, pts_scored
+select player_nm, team, Pts_Scored
+from Sports_Stats
+
+
+--3 Using the query from question 2, make Pts_Scored the first column in the results, 
+--  also alias Player_nm as Player Name and Pts_scored as Points Scored
+select 
+Pts_Scored as [points Scored],
+player_nm as [player name],
+team
+from Sports_Stats
+
+
+--4 Using the query from question 3, add a where clause so that only the team the Reds 
+--  return in the results
+select 
+Pts_Scored as [points Scored],
+player_nm as [player name],
+team
+from Sports_Stats
+where team = 'reds'
+
+--5 Using the query from question 3, add a where clause so that only players whose names end 
+--  with the letter e
+select 
+Pts_Scored as [points Scored],
+player_nm as [player name],
+team
+from Sports_Stats
+where Player_Nm like '%e'
+
+--6  Change Query below to a Full Outer Join
+
+Select *
+from Student as s
+full join Tutoring as t
+on s.Stud_ID = t.Student_ID;
+
+--7 Debug the query below
+
+Select *
+from Tutor as t
+join tutoring as t1
+on t.Tutor_ID = t1.tutor_ID;
+
+
+--8 Fix the query below so that it only returns the following Fields: Stud_NM, Tutor_ID, Subject
+
+Select s.Stud_NM, t.Tutor_ID, t.Subject
+from Student as s
+join Tutoring as t
+on s.Stud_ID = t.Student_ID;
+
+--9  Fix query below (hint: Tutor_ID is a field in both tables)
+
+Select t.Tutor_ID, Name, YearService, Subject
+from Tutor as t
+join tutoring as t1
+on t.Tutor_ID = t1.tutor_ID;
+
+--10  Fix the query below so no NULLs show
+
+Select  t.Name, t.YearService, t1.Subject
+from Tutor as t
+left join tutoring as t1
+on t.Tutor_ID = t1.tutor_ID
+where subject is not NULL
+
+-----------------------------------------------------------------
+
+---- Bonus Questions ----
+
+
+-- using this case statement as a template. Create one that puts the pts_scored column
+-- from the Sports_Stats table into 3 categories - High Score, Med Score, Low Score
+  select *,
+  case 
+  when Price < 100 then 'Low Cost'
+  when Price < 500 then 'Mid Cost'
+  when Price < 1000 then 'High Cost'
+  else'Expensive'
+  end as Cost_bucket
+  from Cust_Orders
+
+  select *,
+  case
+  when Pts_Scored < 10 then 'low'
+  when Pts_Scored < 20 then 'mid'
+  else 'high'
+  end as points_bucket
+  from Sports_Stats
+
+
+  --- Using the case statement you created in the previous step. Put the query into
+  --- a temp table (remember # indicates temp table)
+
+  select *,
+  case
+  when Pts_Scored < 10 then 'low'
+  when Pts_Scored < 20 then 'mid'
+  else 'high'
+  end as points_bucket
+  into #ptsBuck
+  from Sports_Stats
+
+
+
+
+  --- Query your temp table filtering for Low Score
+
+  select *
+  from #ptsBuck
+  where points_bucket = 'low'
