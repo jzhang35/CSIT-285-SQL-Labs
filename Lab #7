@@ -1,0 +1,75 @@
+use G00192201;
+
+
+--1 execute the code below -- check the Programmability folder in the Object Explorer
+-- Hint ( you may need to refresh your dashbase in the object explorer)
+create procedure AvgPts_for_wins 
+@Team nvarchar(50)
+as
+select Team, Player_Nm, avg(pts_scored) as [Average Points Scored]
+  from Sports_Stats
+  where Win_Lose = 'W'
+  and team = @team
+  group by team, Player_Nm;
+
+
+--2 create a query to show all all the distinct team names in the 
+-- table Sport_Stats
+select distinct team
+from sports_stats;
+
+--3 run the query below for each team 
+exec AvgPts_for_wins @team = 'yellows';
+exec AvgPts_for_wins @team = 'reds';
+exec AvgPts_for_wins @team = 'blues';
+
+--4 Using the stored procedure in step 1 as referrence, 
+--- edit the query below to only return orders paid with cash 
+  Create procedure [dbo].[Dept_Orders_Cash] 
+  @Dept nvarchar(255)
+  as
+  Select * from Cust_Orders
+  where dept = @Dept and payment = 'cash';
+
+ --5 create a query to show all all the distinct departments in the 
+-- table Cust_orders
+select distinct dept
+from cust_orders;
+
+--6 execute procedure Dept_Orders_Cash for 2 of the depts
+exec [dbo].[Dept_Orders_Cash] @dept  = 'Toys'
+exec [dbo].[Dept_Orders_Cash] @dept = 'Electronics';
+
+--7 Create the user defined function below. 
+Create function [dbo].[Add_up](@Num1 int, @Num2 int)
+Returns Int
+as
+Begin
+    Return (@Num1+@Num2)
+End;
+
+--8 create another user defined function that returns the result of 
+-- multiplying the given values
+
+Create function [dbo].[mult](@Num1 int, @Num2 int)
+Returns Int
+as
+Begin
+    Return (@Num1*@Num2)
+End;
+
+--9 -- execute UDFs from step 7 and 8 using different values
+
+select dbo.Add_up (2,3) as Added, dbo.mult(2,3) as Multiplied
+
+--10 run the query below to create the UDF
+Create Function [dbo].[MNTH_YR](@DT as DATE)
+Returns varchar(8)
+as
+Begin
+     Return(cast(concat(month(@DT),'-',year(@DT))as varchar(8)))
+END;
+
+--11 Utilize the UDF above to return the Month and Year of the Tran_dt
+--   column
+select *, dbo.MNTH_YR(tran_dt) as 'Month/Year' from Cust_Orders
