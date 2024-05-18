@@ -1,0 +1,92 @@
+use G00192201;
+
+-- We will be using the table Sports_Stats for this lab. If you do not
+-- have that table in your database, let the instructor know
+
+select *
+from Sports_Stats;
+
+-- 1  perform a count(*) of all records in the table: <place result here>
+
+select count(*) as total
+from Sports_Stats;
+
+ 
+
+--2 Return only the first 5 records  hint** top()
+
+select Top(5)*
+from Sports_Stats;
+
+-- 3 List distinct team names: <place result here>
+
+select distinct(team)
+from Sports_Stats;
+
+ 
+
+--4 Return Max and Min score: <place result here>
+
+select min(pts_scored) as min,
+max(pts_scored) as max
+from Sports_Stats;
+
+ 
+
+-- 5 What is Frank's Max and Min score:<place result here>
+select min(pts_scored) as min, 
+max(pts_scored) as max
+from Sports_Stats
+where player_nm = 'Frank';
+
+ 
+
+-- 6 What is the total of all points scored: <place result here>
+select sum(pts_scored) as [Total Points]
+from Sports_Stats;
+
+ 
+
+-- 7 What is the average pts scored grouped by team;
+select avg(Pts_Scored) as avg
+from Sports_Stats
+group by team;
+
+-- 8 What is the total and average pts scored grouped by player:
+
+select player_nm,
+sum(Pts_Scored) as sum, 
+avg(Pts_Scored) as avg
+from Sports_Stats
+group by player_nm;
+
+-- 9 What is the total and average pts scored grouped by team and player: 
+
+select team,
+player_nm,
+sum(Pts_Scored) as sum, 
+avg(Pts_Scored) as avg
+from Sports_Stats
+group by team, player_nm
+
+-- 10 What is the total and average pts scored grouped 
+---by team and player where player s name is not Frank: Show Query
+
+
+select team, 
+player_nm,
+sum(Pts_Scored) as sum, 
+avg(Pts_Scored) as avg
+from Sports_Stats
+where player_nm != 'frank'
+group by team, player_nm;
+
+-- 11 11.	Return count of records grouped by Player_NM 
+--where player has a record count greater than 1  (Hint: use Having):
+
+
+select player_nm,
+count(*) as Record_CT
+from Sports_Stats
+group by player_nm
+having count(*) > 1;
