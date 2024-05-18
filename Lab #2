@@ -1,0 +1,108 @@
+use G00192201;
+
+--1) Create 3 select statements (one for each table) so you can see what kind of data you are
+--working with.
+
+select *
+from tutoring;
+
+select *
+from tutor;
+
+select *
+from student;
+
+--2) Create an inner join between tables Student and Tutoring (Use Select * for you field selection).
+--Note that Student_ID is the FK to Stud_ID in the Student table. PK and FK can have different
+--names.
+
+select *
+from student as s
+join tutoring as tg
+on s.stud_id = tg.student_id;
+
+--3) Create and inner join between tables Tutoring and Tutor (Use Select *)
+
+select *
+from tutoring as tg
+join tutor as t
+on tg.tutor_id = t.tutor_id;
+
+--4) Create a Full Outer Join between tables Tutoring and Tutor (Use Select *)
+
+select *
+from tutoring as tg
+full outer join tutor as t
+on tg.tutor_id = t.tutor_id;
+
+--5) Create a left and right outer join between tables Tutoring and Tutor (Use Select *) **note,
+--create two separate queries
+
+select *
+from tutoring as tg
+left outer join tutor as t
+on tg.tutor_id = t.tutor_id;
+
+select *
+from tutoring as tg
+right outer join tutor as t
+on tg.tutor_id = t.tutor_id;
+
+--6) Using the Query below, filter the results to only show Subjects starting with the letter C. **Hint
+--when using % wildcard, you need to use the Like command
+
+select T.Name, T.YearService, T1.[Subject]
+from Tutor as t
+join Tutoring as T1
+on t.Tutor_ID = t1.Tutor_ID
+where [subject] like 'c%';
+
+--7) Run the following two queries and in a sentence or two, explain what the difference is in the
+--results.
+
+select T.Name, T.YearService, T1.[Subject]
+from Tutor as t
+left join Tutoring as T1
+on t.Tutor_ID = t1.Tutor_ID;
+
+select T.Name, T.YearService, T1.[Subject]
+from Tutor as t
+left join Tutoring as T1
+on t.Tutor_ID = t1.Tutor_ID
+Where Subject IS NOT NULL;
+
+--Response: The difference between the second and third chart is that, in the second chart, all
+--the original null data has been replaced by new non-null data. All the data that wasn't null remains
+--in the second chart.
+
+--8) Using the Query below, return the results sorted by Name in reverse Alphabetical order
+
+select T.Name, T.YearService, T1.[Subject]
+from Tutor as t
+left join Tutoring as T1
+on t.Tutor_ID = t1.Tutor_ID
+order by name desc;
+
+--9) Use the query below to return only results where Start_Dt is between Jan 1 2018 and Dec 31 2020
+
+select s.Stud_NM, S.Start_dt, t.[Subject]
+from Student as s
+join Tutoring as T
+on S.Stud_ID = t.Student_ID
+where S.Start_dt between '2018-01-01' and '2020-12-31';
+
+
+--10) BONUS challenge question.
+--Before running the query below, write down what you what you think the results will be. How close
+--were you?
+
+select s.Stud_NM, s.Start_dt, t.[Subject], T1.[Name], T1.YearService
+from Student as s
+join Tutoring as T
+on S.Stud_ID = t.Student_ID
+join Tutor as T1
+on T.Tutor_ID = T1.Tutor_ID
+
+--Response: The first chart will be a chart with "Student" and "Tutoring" joined together based on 
+--their shared "Stud_ID" and "Student_ID" data. The second chart will be a chart with "Tutoring" 
+--and "Tutor" joined together based on their shared "Tutor_ID" data.
